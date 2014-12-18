@@ -1,6 +1,6 @@
 # debug
 
-> tiny, C++11 header-only debug utility inspired to TJ's node and go debug libraries. Tested with clang.
+> tiny, C++11 header-only debug utility inspired to TJ Holowaychuk node and go debug libraries. Tested with clang.
 
 ## Installation
 
@@ -46,16 +46,7 @@ int main(int argc, char const *argv[])
 
 You use the the __DEBUG__ environment variable to enable these based on a regular expression. Here are some examples:
 
-```
-   λ debug.hxx/ DEBUG=* ./bin/test                       
-   main this is a main`s message
-   test This is just another module message
-```
-
-```
-   λ debug.hxx/ DEBUG=main ./bin/test                       
-   main this is a main`s message
-```
+![](https://dl.dropboxusercontent.com/u/5867765/images/debug_hxx.png)
 
 ## Conventions
 
