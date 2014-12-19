@@ -1,4 +1,4 @@
-/* 
+/*
 Copyright (C) 2014 Vittorio Zaccaria
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -37,8 +37,8 @@ static auto Debug = [](std::string moduleName) {
 	auto use_colors = std::getenv("DEBUG_COLORS");
 
 	if (use_colors == NULL || (
-		std::string(use_colors)!= "false" && 
-		std::string(use_colors) != "no" && 
+		std::string(use_colors) != "false" &&
+		std::string(use_colors) != "no" &&
 		std::string(use_colors) != "disabled")) {
 		std::hash<std::string> hash_fn;
 		h = hash_fn(moduleName) % 6;
@@ -46,21 +46,20 @@ static auto Debug = [](std::string moduleName) {
 
 	int colors[] = { 6, 2, 3, 4, 5, 1 };
 
+	auto env = std::getenv("DEBUG");
+	bool shouldDebug = false;
+	if (env != NULL) {
+		std::regex re(env, std::regex_constants::ECMAScript | std::regex_constants::icase);
+		shouldDebug = std::regex_search(moduleName, re);
+	}
 	return [=](std::string message) {
-
-		auto env = std::getenv("DEBUG");
-		bool shouldDebug = false;
-
-		if (env != NULL) {
-			std::regex re(env, std::regex_constants::ECMAScript | std::regex_constants::icase);
-			if (std::regex_search(moduleName, re)) {
-				std::cerr << " \u001b[9" << colors[h] << "m" << moduleName;
-				std::cerr << " \u001b[0m" << message << "\u001b[3" << h << "m" << std::endl;
-			}
-		}
+		if (!shouldDebug){ return false; }
+		std::cerr << " \u001b[9" << colors[h] << "m" << moduleName;
+		std::cerr << " \u001b[0m" << message << "\u001b[3" << h << "m" << std::endl;
+		return true;
 	};
 };
 
 
 #endif // DEBUG_HXX
- 
+
