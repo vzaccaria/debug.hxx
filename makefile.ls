@@ -1,4 +1,4 @@
-#!/usr/bin/env lsc 
+#!/usr/bin/env lsc
 
 { parse, add-plugin } = require('newmake')
 
@@ -10,13 +10,13 @@ parse ->
     @add-plugin 'link', (files) ->
         @reduce-files( ("clang++ $^ -o $@"), "linked", "x", files)
 
-    @collect "build", -> 
+    @collect "build", ->
         @dest "./bin/test", ->
             @link ->  [
                          @clang 'deps/*/**.cpp', 'deps/*/**.{hxx}'
                          @clang 'test/*.cpp', '*.hxx'
                          ]
-        
+
     @collect "all", ->
         @command-seq -> [
             @make "build"
@@ -28,6 +28,6 @@ parse ->
 
 
 
-        # @dest "./bin/frontend", -> 
-        #         
+        # @dest "./bin/frontend", ->
+        #
 
