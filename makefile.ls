@@ -5,7 +5,7 @@
 parse ->
 
     @add-plugin 'clang',(g, deps) ->
-        @compile-files( (-> "clang++ -c --std=c++11 #{it.orig-complete} -o #{it.build-target}"), ".o", g, deps )
+        @compile-files( (-> "clang++ -c --std=c++11 #{it.orig-complete} -I. -o #{it.build-target}"), ".o", g, deps )
 
     @add-plugin 'link', (files) ->
         @reduce-files( ("clang++ $^ -o $@"), "linked", "x", files)
@@ -14,7 +14,7 @@ parse ->
         @dest "./bin/test", ->
             @link ->  [
                          @clang 'deps/*/**.cpp', 'deps/*/**.{hxx}'
-                         @clang '*.cpp', '*.hxx'
+                         @clang 'test/*.cpp', '*.hxx'
                          ]
         
     @collect "all", ->
