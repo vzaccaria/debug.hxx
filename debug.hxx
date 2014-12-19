@@ -1,4 +1,4 @@
-/* 
+/*
 Copyright (C) 2014 Vittorio Zaccaria
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -37,8 +37,8 @@ static auto Debug = [](std::string moduleName) {
 	auto use_colors = std::getenv("DEBUG_COLORS");
 
 	if (use_colors == NULL || (
-		std::string(use_colors)!= "false" && 
-		std::string(use_colors) != "no" && 
+		std::string(use_colors) != "false" &&
+		std::string(use_colors) != "no" &&
 		std::string(use_colors) != "disabled")) {
 		std::hash<std::string> hash_fn;
 		h = hash_fn(moduleName) % 6;
@@ -49,7 +49,6 @@ static auto Debug = [](std::string moduleName) {
 	return [=](std::string message) {
 
 		auto env = std::getenv("DEBUG");
-		bool shouldDebug = false;
 
 		if (env != NULL) {
 			std::regex re(env, std::regex_constants::ECMAScript | std::regex_constants::icase);
@@ -63,4 +62,4 @@ static auto Debug = [](std::string moduleName) {
 
 
 #endif // DEBUG_HXX
- 
+
