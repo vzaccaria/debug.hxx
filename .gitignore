@@ -2,3 +2,5 @@
 *.o
 
 .build/linked0.x
+
+bin
