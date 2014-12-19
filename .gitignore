@@ -6,3 +6,11 @@
 bin
 
 makefile
+
+test/out0.tmp
+
+test/out1.tmp
+
+test/out2.tmp
+
+test/update-tests

@@ -52,6 +52,12 @@ You use the the __DEBUG__ environment variable to enable these based on a regula
 
 If you're using this in one or more of your libraries, you _should_ use the name of your library so that developers may toggle debugging as desired without guessing names. 
 
+## Tests
+
+```
+make test
+```
+
 ## Authors
 
 - Vittorio Zaccaria
@@ -60,6 +66,7 @@ If you're using this in one or more of your libraries, you _should_ use the name
 
 - TJ Holowaychuk
 - Nathan Rajlich
+
 
 ## License
 

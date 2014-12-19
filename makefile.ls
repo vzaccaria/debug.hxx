@@ -26,6 +26,11 @@ parse ->
         @remove-all-targets()
         ]
 
+    @collect "test", -> [
+        @make 'all'
+        @cmd "./test/test.sh"
+        ]
+
 
 
         # @dest "./bin/frontend", ->

@@ -9,7 +9,7 @@ extern void secondfunction();
 
 int main(int argc, char const *argv[])
 {
-	debug("this is a main`s message");
+	debug("this is main");
 	secondfunction();
 	return 0;
 }
