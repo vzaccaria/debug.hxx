@@ -60,6 +60,8 @@ static auto Debug = [](std::string moduleName) {
 	};
 };
 
+#define debugm(msg) Debug(std::string(__FILE__) + ":" + std::to_string(__LINE__))(msg)
+
 
 #endif // DEBUG_HXX
 
