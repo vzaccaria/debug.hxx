@@ -10,13 +10,19 @@ parse ->
     @add-plugin 'link', (files) ->
         @reduce-files( ("clang++ $^ -o $@"), "linked", "x", files)
 
-    @collect "build", ->
+    @collect "build", -> [
         @dest "./bin/test", ->
             @link ->  [
                          @clang 'deps/*/**.cpp', 'deps/*/**.{hxx}'
-                         @clang 'test/*.cpp', '*.hxx'
+                         @clang 'test/test{1,2}.cpp', '*.hxx'
                          ]
 
+        @dest "./bin/test2", ->
+            @link ->  [
+                         @clang 'deps/*/**.cpp', 'deps/*/**.{hxx}'
+                         @clang 'test/test3.cpp', '*.hxx'
+                         ]
+        ]
     @collect "all", ->
         @command-seq -> [
             @make "build"
