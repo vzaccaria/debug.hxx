@@ -33,15 +33,28 @@ THE SOFTWARE.
 static auto Debug = [](std::string moduleName) {
 
 	auto h = 0;
+    auto debug_colors = std::getenv("DEBUG_COLORS");
 
-	auto use_colors = std::getenv("DEBUG_COLORS");
+	bool use_colors;
+    
+	auto name_to_be_hashed = moduleName;
 
-	if (use_colors == NULL || (
-		std::string(use_colors) != "false" &&
-		std::string(use_colors) != "no" &&
-		std::string(use_colors) != "disabled")) {
+	if (debug_colors == NULL || (
+		std::string(debug_colors) != "false" &&
+		std::string(debug_colors) != "no" &&
+		std::string(debug_colors) != "disabled")) {
+		use_colors = true;
+	}
+	else {
+		use_colors = false;
+	}
+
+	if(use_colors) {
 		std::hash<std::string> hash_fn;
-		h = hash_fn(moduleName) % 6;
+		if(name_to_be_hashed.find(':') != (std::string::npos)) {
+			name_to_be_hashed.erase(name_to_be_hashed.find(':'));
+		}
+		h = hash_fn(name_to_be_hashed) % 6;
 	}
 
 	int colors[] = { 6, 2, 3, 4, 5, 1 };
@@ -53,9 +66,14 @@ static auto Debug = [](std::string moduleName) {
 		shouldDebug = std::regex_search(moduleName, re);
 	}
 	return [=](std::string message) {
-		if (!shouldDebug){ return false; }
-		std::cerr << " \u001b[9" << colors[h] << "m" << moduleName;
-		std::cerr << " \u001b[0m" << message << "\u001b[3" << h << "m" << std::endl;
+		if (!shouldDebug) { return false; }
+		if (!use_colors) {
+			std::cerr << " " << moduleName;
+			std::cerr << " " << message << std::endl;	
+		} else {
+			std::cerr << " \u001b[9" << colors[h] << "m" << moduleName;
+			std::cerr << " \u001b[0m" << message << "\u001b[3" << h << "m" << std::endl;
+		}
 		return true;
 	};
 };
