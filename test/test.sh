@@ -9,6 +9,8 @@ DEBUG=main $srcdir/../bin/test &> $srcdir/out1c.tmp
 DEBUG_COLORS=no DEBUG=* $srcdir/../bin/test &> $srcdir/out2.tmp 
 DEBUG_COLORS=no DEBUG=* $srcdir/../bin/test2 &> $srcdir/out3.tmp 
 DEBUG_COLORS=no $srcdir/../bin/test4 &> $srcdir/out4.tmp
+DEBUG_COLORS=no DEBUG=main* $srcdir/../bin/test5  &> $srcdir/out5.tmp
+
 function check {
 	m=$1
 	f1=$2
@@ -27,5 +29,6 @@ check '3' $srcdir/out2.tmp $srcdir/out2-ref.tmp
 check '4' $srcdir/out3.tmp $srcdir/out3-ref.tmp
 check '5' $srcdir/out1c.tmp $srcdir/out1c-ref.tmp
 check '6' $srcdir/out4.tmp $srcdir/out4-ref.tmp
+check '7' $srcdir/out5.tmp $srcdir/out5-ref.tmp
 
 

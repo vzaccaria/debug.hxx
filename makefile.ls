@@ -28,11 +28,18 @@ parse ->
                          @clang 'deps/*/**.cpp', 'deps/*/**.{hxx}'
                          @clang 'test/test{1,4}.cpp', '*.hxx'
                          ]
+
+        @dest "./bin/test5", ->
+            @link ->  [
+                         @clang 'deps/*/**.cpp', 'deps/*/**.{hxx}'
+                         @clang 'test/test5.cpp', '*.hxx'
+                         ]
         ]
 
     @collect "all", ->
         @command-seq -> [
             @make "build"
+            @cmd "./test/test.sh"
             ]
 
     @collect "clean", -> [
