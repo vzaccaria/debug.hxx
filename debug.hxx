@@ -86,7 +86,9 @@ static auto Debug = [](std::string moduleName) {
 	auto env = std::getenv("DEBUG");
 	bool shouldDebug = false;
 	if (env != NULL) {
-		std::regex re(env, std::regex_constants::ECMAScript | std::regex_constants::icase);
+		std::string reworked = env;
+		reworked = sentence(words(reworked, ","), "|");
+		std::regex re(reworked, std::regex_constants::ECMAScript | std::regex_constants::icase);
 		shouldDebug = std::regex_search(moduleName, re);
 	}
 	return [=](std::string message) {
