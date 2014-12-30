@@ -23,12 +23,12 @@ function check {
 	fi
 }
 
-check '1' $srcdir/out0.tmp $srcdir/out0-ref.tmp 
-check '2' $srcdir/out1.tmp $srcdir/out1-ref.tmp 
-check '3' $srcdir/out2.tmp $srcdir/out2-ref.tmp 
-check '4' $srcdir/out3.tmp $srcdir/out3-ref.tmp
-check '5' $srcdir/out1c.tmp $srcdir/out1c-ref.tmp
-check '6' $srcdir/out4.tmp $srcdir/out4-ref.tmp
-check '7' $srcdir/out5.tmp $srcdir/out5-ref.tmp
+check '1' $srcdir/out0.tmp $srcdir/out0.ref 
+check '2' $srcdir/out1.tmp $srcdir/out1.ref 
+check '3' $srcdir/out2.tmp $srcdir/out2.ref 
+check '4' $srcdir/out3.tmp $srcdir/out3.ref
+check '5' $srcdir/out1c.tmp $srcdir/out1c.ref
+check '6' $srcdir/out4.tmp $srcdir/out4.ref
+check '7' $srcdir/out5.tmp $srcdir/out5.ref
 
 

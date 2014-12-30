@@ -44,10 +44,11 @@ parse ->
 
     @collect "clean", -> [
         @remove-all-targets()
+        @cmd "cd ./test && rm *.tmp"
         ]
 
     @collect "test", -> [
-        @make 'all'
+        @cmd "cd ./test && rm *.tmp"
         @cmd "./test/test.sh"
         ]
 
