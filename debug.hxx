@@ -29,6 +29,30 @@ THE SOFTWARE.
 #include <cstdlib>
 #include <regex>
 #include <functional>
+#include <vector>
+
+static std::vector<std::string> words(std::string str, std::string delim = " ") {
+	std::vector<std::string> res;
+	auto pos = 0;
+	while( (pos = str.find(delim)) != std::string::npos) {
+		res.push_back(str.substr(0, pos));
+		str.erase(0, pos + delim.length());
+	}
+	res.push_back(str);
+	return res;
+}
+
+static std::string sentence(std::vector<std::string> v, std::string delim = " ") {
+	std::string s = "";
+	auto l = v.size();
+	for(auto x=0; x<l; x++) {
+		s = s + v[x]; 
+		if(x != (l-1)) {
+			s = s + delim;
+		}
+	}
+	return s;
+}
 
 static auto Debug = [](std::string moduleName) {
 
