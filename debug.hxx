@@ -86,9 +86,17 @@ static auto Debug = [](std::string moduleName) {
 	auto env = std::getenv("DEBUG");
 	bool shouldDebug = false;
 	if (env != NULL) {
-		std::string reworked = env;
-		reworked = sentence(words(reworked, ","), "|");
-		std::regex re(reworked, std::regex_constants::ECMAScript | std::regex_constants::icase);
+		std::regex star_re("\\*");
+		std::string namespace_re = env;
+
+		auto namespaces = words(namespace_re, ",");
+		for_each(namespaces.begin(), namespaces.end(), [=](std::string & n) {
+			n = "^" + n + "$";
+		});
+		namespace_re = sentence(namespaces, "|");
+		namespace_re = std::regex_replace(namespace_re, star_re, ".*");
+
+		std::regex re(namespace_re, std::regex_constants::ECMAScript | std::regex_constants::icase);
 		shouldDebug = std::regex_search(moduleName, re);
 	}
 	return [=](std::string message) {
