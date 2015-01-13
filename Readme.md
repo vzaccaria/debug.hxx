@@ -88,6 +88,41 @@ then:
  test/test3.cpp:10 this is main
 ```
 
+## Time output
+
+To enable time measurements between debug messages associated with
+the same namespace (or the same line of code when using `debugm`), use `DEBUG_TIME=yes`:
+
+```c++
+/* example.cpp */
+#include <iostream>
+#include "debug.hxx"
+#include <unistd.h>
+
+using namespace std;
+
+int main(int argc, char const *argv[])
+{
+    for(int i=0; i<4; i++) {
+        debugm("debug printed.");
+        sleep(1);
+    }
+        return 0;
+}
+```
+
+Run it with: 
+
+```
+> DEBUG_COLORS=no DEBUG=* DEBUG_TIME=yes $srcdir/../bin/test6
+
+ test/test6.cpp:10 debug printed. +0ms
+ test/test6.cpp:10 debug printed. +1002ms
+ test/test6.cpp:10 debug printed. +2003ms
+ test/test6.cpp:10 debug printed. +3005ms
+```
+
+
 
 ## Conventions
 
