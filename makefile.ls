@@ -34,6 +34,12 @@ parse ->
                          @clang 'deps/*/**.cpp', 'deps/*/**.{hxx}'
                          @clang 'test/test5.cpp', '*.hxx'
                          ]
+
+        @dest "./bin/test6", ->
+            @link ->  [
+                         @clang 'deps/*/**.cpp', 'deps/*/**.{hxx}'
+                         @clang 'test/test6.cpp', '*.hxx'
+                         ]
         ]
 
     @collect "all", ->
