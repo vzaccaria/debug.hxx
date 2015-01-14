@@ -134,6 +134,7 @@ static auto Debug = [](std::string moduleName) {
 			static auto prev = get_ms();
 			auto curr = get_ms();
 			diff = curr - prev;
+			prev = curr;
 		}
 
 #define _col_light(c, m) 	("\u001b[9" + std::to_string(c) + "m" + m + " \u001b[0m" )

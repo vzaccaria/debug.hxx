@@ -3,14 +3,16 @@ srcdir=`dirname $0`
 srcdir=`cd $srcdir; pwd`
 dstdir=`pwd`
 
-DEBUG_COLORS=no $srcdir/../bin/test &> $srcdir/out0.tmp 
-DEBUG_COLORS=no DEBUG=main $srcdir/../bin/test &> $srcdir/out1.tmp 
-DEBUG=main $srcdir/../bin/test &> $srcdir/out1c.tmp 
-DEBUG_COLORS=no DEBUG=* $srcdir/../bin/test &> $srcdir/out2.tmp 
-DEBUG_COLORS=no DEBUG=* $srcdir/../bin/test2 &> $srcdir/out3.tmp 
-DEBUG_COLORS=no $srcdir/../bin/test4 &> $srcdir/out4.tmp
-DEBUG_COLORS=no DEBUG=main* $srcdir/../bin/test5  &> $srcdir/out5.tmp
-DEBUG_COLORS=no DEBUG=* DEBUG_TIME=yes $srcdir/../bin/test6  &> $srcdir/out6.tmp
+DEBUG_COLORS=no 						$srcdir/../bin/test   &> $srcdir/out0.tmp 
+DEBUG_COLORS=no DEBUG=main 				$srcdir/../bin/test   &> $srcdir/out1.tmp 
+DEBUG=main 								$srcdir/../bin/test   &> $srcdir/out1c.tmp 
+DEBUG_COLORS=no DEBUG=* 				$srcdir/../bin/test   &> $srcdir/out2.tmp 
+DEBUG_COLORS=no DEBUG=* 				$srcdir/../bin/test2  &> $srcdir/out3.tmp 
+DEBUG_COLORS=no 						$srcdir/../bin/test4  &> $srcdir/out4.tmp
+DEBUG_COLORS=no DEBUG=main* 			$srcdir/../bin/test5  &> $srcdir/out5.tmp
+
+DEBUG_COLORS=no DEBUG=* DEBUG_TIME=yes 	$srcdir/../bin/test6  &> $srcdir/out6.tmp.t
+cat $srcdir/out6.tmp.t | sed 's/.ms//' > $srcdir/out6.tmp
 
 function check {
 	m=$1
