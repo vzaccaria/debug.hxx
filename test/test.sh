@@ -12,7 +12,7 @@ DEBUG_COLORS=no 						$srcdir/../bin/test4  &> $srcdir/out4.tmp
 DEBUG_COLORS=no DEBUG=main* 			$srcdir/../bin/test5  &> $srcdir/out5.tmp
 
 DEBUG_COLORS=no DEBUG=* DEBUG_TIME=yes 	$srcdir/../bin/test6  &> $srcdir/out6.tmp.t
-cat $srcdir/out6.tmp.t | sed 's/.ms//' > $srcdir/out6.tmp
+cat $srcdir/out6.tmp.t | sed 's/.ms/0ms/g' > $srcdir/out6.tmp
 
 function check {
 	m=$1
