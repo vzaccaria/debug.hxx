@@ -30,6 +30,9 @@ THE SOFTWARE.
 #include <regex>
 #include <functional>
 #include <vector>
+#include <ctime>
+#include <iomanip>
+#include <chrono>
 
 static std::vector<std::string> words(std::string str, std::string delim = " ") {
 	std::vector<std::string> res;
@@ -58,20 +61,39 @@ static auto Debug = [](std::string moduleName) {
 
 	auto h = 0;
     auto debug_colors = std::getenv("DEBUG_COLORS");
+    auto debug_time = std::getenv("DEBUG_TIME");
 
 	bool use_colors;
+	bool use_time;
     
 	auto name_to_be_hashed = moduleName;
 
-	if (debug_colors == NULL || (
-		std::string(debug_colors) != "false" &&
-		std::string(debug_colors) != "no" &&
-		std::string(debug_colors) != "disabled")) {
-		use_colors = true;
-	}
-	else {
-		use_colors = false;
-	}
+	auto getBool = [](const char *e, bool def) -> bool {
+		if(def == true) {
+			if (e == NULL || (
+				std::string(e) != "false" &&
+				std::string(e) != "no" &&
+				std::string(e) != "disabled")) {
+				return true;
+			}
+			else {
+				return false;
+			}
+		} else {
+			if(e != NULL && (
+				std::string(e) == "true" ||
+				std::string(e) == "yes" ||
+				std::string(e) == "enabled")) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+	};
+
+	use_colors = getBool(debug_colors, true);
+	use_time = getBool(debug_time, false);
+
 
 	if(use_colors) {
 		std::hash<std::string> hash_fn;
@@ -100,13 +122,42 @@ static auto Debug = [](std::string moduleName) {
 		shouldDebug = std::regex_search(moduleName, re);
 	}
 	return [=](std::string message) {
+
+		std::string time_suffix = "";
+		int diff = 0;
+
+		if(use_time) {
+			auto get_ms = []() -> int {
+				using namespace std::chrono;
+				return duration_cast< milliseconds >(high_resolution_clock::now().time_since_epoch()).count();
+			};
+			static auto prev = get_ms();
+			auto curr = get_ms();
+			diff = curr - prev;
+			prev = curr;
+		}
+
+#define _col_light(c, m) 	("\u001b[9" + std::to_string(c) + "m" + m + " \u001b[0m" )
+#define _col_light_ms(c, m) 	("\u001b[9" + std::to_string(c) + "m" + m + "ms \u001b[0m" )
+
+
 		if (!shouldDebug) { return false; }
+
 		if (!use_colors) {
 			std::cerr << " " << moduleName;
-			std::cerr << " " << message << std::endl;	
+			std::cerr << " " << message;	
 		} else {
-			std::cerr << " \u001b[9" << colors[h] << "m" << moduleName;
-			std::cerr << " \u001b[0m" << message << "\u001b[3" << h << "m" << std::endl;
+			std::cerr << _col_light(colors[h], moduleName);
+			std::cerr << message;
+		}
+		if(use_time) {
+			if(use_colors) {
+				std::cerr << " +" << _col_light_ms(colors[h], std::to_string((diff))) << std::endl;
+			} else {
+				std::cerr << " +" << std::to_string((diff)) << "ms" << std::endl;
+			}
+		} else {
+			std::cerr << std::endl;
 		}
 		return true;
 	};
