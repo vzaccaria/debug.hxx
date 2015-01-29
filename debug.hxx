@@ -26,6 +26,7 @@ THE SOFTWARE.
 
 #include <string>
 #include <iostream>
+#include <sstream>
 #include <cstdlib>
 #include <regex>
 #include <functional>
@@ -46,15 +47,13 @@ static std::vector<std::string> words(std::string str, std::string delim = " ") 
 }
 
 static std::string sentence(std::vector<std::string> v, std::string delim = " ") {
-	std::string s = "";
-	const std::size_t l = v.size();
-	for(std::size_t x=0; x<l; x++) {
-		s = s + v[x];
-		if(x != (l-1)) {
-			s = s + delim;
-		}
+	std::ostringstream s;
+	const std::size_t l = v.size() - 1;
+	for(std::size_t x = 0; x < l; ++x) {
+		s << v[x] << delim;
 	}
-	return s;
+	s << v[l];
+	return s.str();
 }
 
 static auto Debug = [](std::string moduleName) {
