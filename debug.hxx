@@ -44,7 +44,7 @@ static void words(std::string str, std::vector<std::string>& res, const std::str
 	res.push_back(str);
 }
 
-static std::string sentence(std::vector<std::string> v, std::string delim = " ") {
+static const std::string sentence(const std::vector<std::string>& v, std::string delim = " ") {
 	std::ostringstream s;
 	const std::size_t l = v.size() - 1;
 	for(std::size_t x = 0; x < l; ++x) {
