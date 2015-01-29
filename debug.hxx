@@ -59,8 +59,8 @@ static std::string sentence(std::vector<std::string> v, std::string delim = " ")
 static auto Debug = [](std::string moduleName) {
 
 	auto h = 0;
-    auto debug_colors = std::getenv("DEBUG_COLORS");
-    auto debug_time = std::getenv("DEBUG_TIME");
+	auto debug_colors = std::getenv("DEBUG_COLORS");
+	auto debug_time = std::getenv("DEBUG_TIME");
 
 	bool use_colors;
 	bool use_time;
