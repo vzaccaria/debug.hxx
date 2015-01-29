@@ -113,9 +113,7 @@ static auto Debug = [](std::string moduleName) {
 	}
 	return [=](std::string message) {
 
-		std::string time_suffix = "";
 		int diff = 0;
-
 		if(use_time) {
 			auto get_ms = []() -> int {
 				using namespace std::chrono;
