@@ -36,7 +36,7 @@ THE SOFTWARE.
 
 static std::vector<std::string> words(std::string str, std::string delim = " ") {
 	std::vector<std::string> res;
-	auto pos = 0;
+	std::size_t pos = 0;
 	while( (pos = str.find(delim)) != std::string::npos) {
 		res.push_back(str.substr(0, pos));
 		str.erase(0, pos + delim.length());
@@ -47,9 +47,9 @@ static std::vector<std::string> words(std::string str, std::string delim = " ") 
 
 static std::string sentence(std::vector<std::string> v, std::string delim = " ") {
 	std::string s = "";
-	auto l = v.size();
-	for(auto x=0; x<l; x++) {
-		s = s + v[x]; 
+	const std::size_t l = v.size();
+	for(std::size_t x=0; x<l; x++) {
+		s = s + v[x];
 		if(x != (l-1)) {
 			s = s + delim;
 		}
@@ -65,7 +65,7 @@ static auto Debug = [](std::string moduleName) {
 
 	bool use_colors;
 	bool use_time;
-    
+
 	auto name_to_be_hashed = moduleName;
 
 	auto getBool = [](const char *e, bool def) -> bool {
@@ -145,7 +145,7 @@ static auto Debug = [](std::string moduleName) {
 
 		if (!use_colors) {
 			std::cerr << " " << moduleName;
-			std::cerr << " " << message;	
+			std::cerr << " " << message;
 		} else {
 			std::cerr << _col_light(colors[h], moduleName);
 			std::cerr << message;
