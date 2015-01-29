@@ -35,15 +35,13 @@ THE SOFTWARE.
 #include <iomanip>
 #include <chrono>
 
-static std::vector<std::string> words(std::string str, std::string delim = " ") {
-	std::vector<std::string> res;
+static void words(std::string str, std::vector<std::string>& res, const std::string& delim = " ") {
 	std::size_t pos = 0;
 	while( (pos = str.find(delim)) != std::string::npos) {
 		res.push_back(str.substr(0, pos));
 		str.erase(0, pos + delim.length());
 	}
 	res.push_back(str);
-	return res;
 }
 
 static std::string sentence(std::vector<std::string> v, std::string delim = " ") {
@@ -101,7 +99,8 @@ static auto Debug = [](std::string moduleName) {
 		std::regex star_re("\\*");
 		std::string namespace_re = env;
 
-		auto namespaces = words(namespace_re, ",");
+		std::vector<std::string> namespaces;
+		words(namespace_re, namespaces, ",");
 		for_each(namespaces.begin(), namespaces.end(), [=](std::string & n) {
 			n = "^" + n + "$";
 		});
