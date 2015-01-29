@@ -68,25 +68,16 @@ static auto Debug = [](std::string moduleName) {
 	auto name_to_be_hashed = moduleName;
 
 	auto getBool = [](const char *e, bool def) -> bool {
-		if(def == true) {
-			if (e == NULL || (
+		if(def) {
+			return (e == NULL || (
 				std::string(e) != "false" &&
 				std::string(e) != "no" &&
-				std::string(e) != "disabled")) {
-				return true;
-			}
-			else {
-				return false;
-			}
+				std::string(e) != "disabled"));
 		} else {
-			if(e != NULL && (
+			return (e != NULL && (
 				std::string(e) == "true" ||
 				std::string(e) == "yes" ||
-				std::string(e) == "enabled")) {
-				return true;
-			} else {
-				return false;
-			}
+				std::string(e) == "enabled"));
 		}
 	};
 
