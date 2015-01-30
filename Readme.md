@@ -137,6 +137,7 @@ make clean && make test
 ## Authors
 
 - Vittorio Zaccaria
+- Yves Le Maout
 
 ## Previous work
 
