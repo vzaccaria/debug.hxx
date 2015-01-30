@@ -26,6 +26,7 @@ THE SOFTWARE.
 
 #include <string>
 #include <iostream>
+#include <sstream>
 #include <cstdlib>
 #include <regex>
 #include <functional>
@@ -34,60 +35,47 @@ THE SOFTWARE.
 #include <iomanip>
 #include <chrono>
 
-static std::vector<std::string> words(std::string str, std::string delim = " ") {
-	std::vector<std::string> res;
-	auto pos = 0;
+static void words(std::string str, std::vector<std::string>& res, const std::string& delim = " ") {
+	std::size_t pos = 0;
 	while( (pos = str.find(delim)) != std::string::npos) {
 		res.push_back(str.substr(0, pos));
 		str.erase(0, pos + delim.length());
 	}
 	res.push_back(str);
-	return res;
 }
 
-static std::string sentence(std::vector<std::string> v, std::string delim = " ") {
-	std::string s = "";
-	auto l = v.size();
-	for(auto x=0; x<l; x++) {
-		s = s + v[x]; 
-		if(x != (l-1)) {
-			s = s + delim;
-		}
+static const std::string sentence(const std::vector<std::string>& v, std::string delim = " ") {
+	std::ostringstream s;
+	const std::size_t l = v.size() - 1;
+	for(std::size_t x = 0; x < l; ++x) {
+		s << v[x] << delim;
 	}
-	return s;
+	s << v[l];
+	return s.str();
 }
 
 static auto Debug = [](std::string moduleName) {
 
 	auto h = 0;
-    auto debug_colors = std::getenv("DEBUG_COLORS");
-    auto debug_time = std::getenv("DEBUG_TIME");
+	auto debug_colors = std::getenv("DEBUG_COLORS");
+	auto debug_time = std::getenv("DEBUG_TIME");
 
 	bool use_colors;
 	bool use_time;
-    
+
 	auto name_to_be_hashed = moduleName;
 
 	auto getBool = [](const char *e, bool def) -> bool {
-		if(def == true) {
-			if (e == NULL || (
+		if(def) {
+			return (e == NULL || (
 				std::string(e) != "false" &&
 				std::string(e) != "no" &&
-				std::string(e) != "disabled")) {
-				return true;
-			}
-			else {
-				return false;
-			}
+				std::string(e) != "disabled"));
 		} else {
-			if(e != NULL && (
+			return (e != NULL && (
 				std::string(e) == "true" ||
 				std::string(e) == "yes" ||
-				std::string(e) == "enabled")) {
-				return true;
-			} else {
-				return false;
-			}
+				std::string(e) == "enabled"));
 		}
 	};
 
@@ -111,7 +99,8 @@ static auto Debug = [](std::string moduleName) {
 		std::regex star_re("\\*");
 		std::string namespace_re = env;
 
-		auto namespaces = words(namespace_re, ",");
+		std::vector<std::string> namespaces;
+		words(namespace_re, namespaces, ",");
 		for_each(namespaces.begin(), namespaces.end(), [=](std::string & n) {
 			n = "^" + n + "$";
 		});
@@ -123,9 +112,7 @@ static auto Debug = [](std::string moduleName) {
 	}
 	return [=](std::string message) {
 
-		std::string time_suffix = "";
 		int diff = 0;
-
 		if(use_time) {
 			auto get_ms = []() -> int {
 				using namespace std::chrono;
@@ -145,7 +132,7 @@ static auto Debug = [](std::string moduleName) {
 
 		if (!use_colors) {
 			std::cerr << " " << moduleName;
-			std::cerr << " " << message;	
+			std::cerr << " " << message;
 		} else {
 			std::cerr << _col_light(colors[h], moduleName);
 			std::cerr << message;
