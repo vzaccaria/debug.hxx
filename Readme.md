@@ -1,5 +1,7 @@
 # debug
 
+[![Join the chat at https://gitter.im/vzaccaria/debug.hxx](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/vzaccaria/debug.hxx?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 > tiny, C++11 header-only debug utility inspired to TJ Holowaychuk node and go debug libraries. Tested with clang.
 
 ## Installation
